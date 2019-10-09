@@ -1,5 +1,5 @@
 <style type="text/css">
-<!--
+
 table { vertical-align: top; }
 tr    { vertical-align: top; }
 td    { vertical-align: top; }
@@ -33,7 +33,7 @@ td    { vertical-align: top; }
 }
 table.page_footer {width: 100%; border: none; background-color: white; padding: 2mm;border-collapse:collapse; border: none;}
 }
--->
+
 </style>
 <page backtop="15mm" backbottom="15mm" backleft="15mm" backright="15mm" style="font-size: 12pt; font-family: arial" >
         <page_footer>
@@ -171,7 +171,7 @@ while ($row=mysqli_fetch_array($sql))
 	 	<p><?php echo $condiciones;?></p>
 	 </div>
 	 
-	 <table cellspacing="0" style="width: 100%; text-align: left; font-size: 10pt; position: absolute; top: 88%;"> 
+	 <table cellspacing="0" style="width: 100%; text-align: left; font-size: 10pt; position: relative; top: 45%;"> 
         <tr>
             <td colspan="1" style="widtd: 5%; text-align: right;" class='midnight-blue'>SUBTOTAL  </td>
             <td colspan="1" style="widtd: 5%; text-align: center;" class='midnight-blue'>IVA (<?php echo $impuesto;?>)%  </td>
@@ -188,12 +188,8 @@ while ($row=mysqli_fetch_array($sql))
 	
 	
 	<br>
-	<div style="font-size:3pt;text-align:center;font-weight:bold">
-		<p>Los presupuestos tienen una validez de 12 dias naturales ,de no aceptarlo tendra que abonarse el 50% de la mano de obra</p>								
-		<p>Los presupuestos realizados de palabra,desmontanto parcialmente o sin desmontar  el vehiculo no seran cerrados, se avisara al propietario 								
-			si el coste de la averia encontrada fuera superior a 50€ del precio indicado en el presupuesto inicial	</p>							
-		<p>Las reparaciones reflejadas en esta factura incluidos los gastos de mano de obra contaran con una garantia de 3 meses o 2000 km recorridos  a partir de la fecha								de entrega del véhiculo.La garantia que afecta a las piezas sustituidas en la reparacion reflejada en la presente factura ,sera dada por el fabricante o garante de dichas piezas 			Si las piezas sustituidas, ya bien sean nuevas o de segunda mano son aportadas por el propietario del vehiculo, la reparacion no tendra ningun tipo de garantia por este taller 			este taller no se hace responsable de los bienes personales que se dejen depositados dentro del vehiculo</p>								
-
+	<div style="font-size:8pt;text-align:justify;">
+		<p>Los presupuestos tienen una validez de 12 dias naturales, de no aceptarlo tendra que abonarse el 50% de la mano de obra. Los presupuestos realizados de palabra,desmontanto parcialmente o sin desmontar  el vehiculo no seran cerrados, se avisara al propietario si el coste de la averia encontrada fuera superior a 50€ del precio indicado en el presupuesto inicial</p>							
 		<p>Sus datos de carácter personal han sido recogidos de acuerdo con lo dispuesto en la ley orgánica 15/1999, del 13 de diciembre de protección de datos personal, y se encuentran almacenados en un fichero propiedad de silvia bonet Giménez, con domicilio en c7 general Riera 77 Local 3 07010-Palma de mallorca Baleares. De acuerdo con la ley anteriortiene derecho a ejercer los derechos de acceso,rectificación,cancelación y oposicion de los datos en la direccion facilitada en este párrafo</p>
 	</div>
 	

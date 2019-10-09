@@ -77,12 +77,11 @@
 					<th>#</th>
 					<th>Fecha</th>
 					<th>Cliente</th>
-					<th>Vendedor</th>
 					<th>Estado</th>
 					<th class='text-right'>Subtotal</th>
 					<th class='text-right'>IVA</th>
 					<th class='text-right'>Total</th>
-					<th class='text-right'>Acciones</th>
+					<th class='text-center'>Acciones</th>
 					
 				</tr>
 				<?php
@@ -100,9 +99,12 @@
 						if ($estado_factura==1){
 							$text_estado="Aceptado";
 							$label_class='label-success';
+							$disabled = "disabled";
 						} else{
 							$text_estado="Pendiente";
 							$label_class='label-warning';
+							$disabled = "";
+							
 						}
 						$iva = $row['total_venta'] - ($row['total_venta']/1.21);
 						$total_venta=$row['total_venta'];
@@ -112,16 +114,16 @@
 						<td><?php echo $numero_factura; ?></td>
 						<td><?php echo $fecha; ?></td>
 						<td><a href="#" data-toggle="tooltip" data-placement="top" title="<i class='glyphicon glyphicon-phone'></i> <?php echo $telefono_cliente;?><br><i class='glyphicon glyphicon-envelope'></i>  <?php echo $email_cliente;?>" ><?php echo $nombre_cliente;?></a></td>
-						<td><?php echo $nombre_vendedor; ?></td>
 						<td><span class="label <?php echo $label_class;?>"><?php echo $text_estado; ?></span></td>
 						<td class='text-right' class="sub" value="<?php number_format ($sub,2);?>"><?php echo number_format ($sub,2) ?></td>
 						<td class='text-right' class="iva" value="<?php number_format ($iva,2);?>"><?php echo number_format ($iva,2) ?></td>	
 						<td class='text-right'><?php echo number_format ($total_venta,2); ?></td>					
 					<td class="text-right">
-						<a href="editar_presupuesto.php?id_factura=<?php echo $id_factura;?>" class='btn btn-default' title='Editar presupuesto'><i class="glyphicon glyphicon-edit"></i></a> 
-						<a href="editar_fecha_presu.php?id_factura=<?php echo $id_factura;?>" class='btn btn-default' title='Editar fecha presupuesto' ><i class="glyphicon glyphicon-calendar"></i></a>
-						<a href="#" class='btn btn-default' title='Descargar presupuesto' onclick="imprimir_factura('<?php echo $id_factura;?>');"><i class="glyphicon glyphicon-download"></i></a> 
-						<a href="#" class='btn btn-danger' title='Borrar presupuesto' onclick="eliminar('<?php echo $numero_factura; ?>')"><i class="glyphicon glyphicon-trash"></i> </a>
+						<a href="pasar_a_factura.php?id_factura=<?php echo $id_factura?>" class="btn btn-success btn-sm" title="Pasar a factura" <?php echo $disabled?>><i class="glyphicon glyphicon-check"></i></a>
+						<a href="editar_presupuesto.php?id_factura=<?php echo $id_factura;?>" class='btn btn-default btn-sm' title='Editar presupuesto'><i class="glyphicon glyphicon-edit"></i></a> 
+						<a href="editar_fecha_presu.php?id_factura=<?php echo $id_factura;?>" class='btn btn-default btn-sm' title='Editar fecha presupuesto' ><i class="glyphicon glyphicon-calendar"></i></a>
+						<a href="#" class='btn btn-default btn-sm' title='Descargar presupuesto' onclick="imprimir_factura('<?php echo $id_factura;?>');"><i class="glyphicon glyphicon-download"></i></a> 
+						<a href="#" class='btn btn-danger btn-sm' title='Borrar presupuesto' onclick="eliminar('<?php echo $numero_factura; ?>')"><i class="glyphicon glyphicon-trash"></i> </a>
 					</td>
 						
 					</tr>

@@ -100,7 +100,7 @@
 		} elseif ($_POST['p'] == "" && $_POST['m'] != "00" && $_POST['a'] == "0") {
 			
 			//busca por mes
-			$sql = "SELECT presupuestos.*, users.firstname, users.lastname, clientes.nombre_cliente FROM presupuestos, users, clientes 
+			$sql = "SELECT presupuestos.*, users.firstname, users.lastname, clientes.nombre_cliente, clientes.telefono_cliente, clientes.email_cliente FROM presupuestos, users, clientes 
 								WHERE presupuestos.id_cliente = clientes.id_cliente AND presupuestos.id_vendedor =  users.user_id 
 								AND MONTH(presupuestos.fecha_factura) = '".$_POST['m']."'";
 
@@ -115,7 +115,7 @@
 		} elseif ($_POST['p'] == "" && $_POST['m'] == "00" && $_POST['a'] != "0") {
 			
 			//busca por año
-			$sql = "SELECT presupuestos.*, users.firstname, users.lastname, clientes.nombre_cliente FROM presupuestos, users, clientes 
+			$sql = "SELECT presupuestos.*, users.firstname, users.lastname, clientes.nombre_cliente, clientes.telefono_cliente, clientes.email_cliente FROM presupuestos, users, clientes 
 								WHERE presupuestos.id_cliente = clientes.id_cliente AND presupuestos.id_vendedor =  users.user_id
 								AND YEAR(presupuestos.fecha_factura) = '".$_POST['a']."'";
 
@@ -130,7 +130,7 @@
 		} elseif ($_POST['p'] != "" && $_POST['m'] == "00" && $_POST['a'] == "0") {
 			
 			//busca por proveedor
-			$sql="SELECT presupuestos.*, users.firstname, users.lastname, clientes.nombre_cliente FROM presupuestos, users, clientes 
+			$sql="SELECT presupuestos.*, users.firstname, users.lastname, clientes.nombre_cliente, clientes.telefono_cliente, clientes.email_cliente FROM presupuestos, users, clientes 
 								WHERE presupuestos.id_cliente = clientes.id_cliente AND presupuestos.id_vendedor =  users.user_id 
 								AND clientes.nombre_cliente LIKE '%".$_POST['p']."%'";
 
@@ -145,7 +145,7 @@
 		} elseif ($_POST['p'] != "" && $_POST['m'] != "00" && $_POST['a'] == "0") {
 			
 			//Busca por proveedor y mes
-			$sql="SELECT presupuestos.*, users.firstname, users.lastname, clientes.nombre_cliente FROM presupuestos, users, clientes 
+			$sql="SELECT presupuestos.*, users.firstname, users.lastname, clientes.nombre_cliente, clientes.telefono_cliente, clientes.email_cliente FROM presupuestos, users, clientes 
 								WHERE presupuestos.id_cliente = clientes.id_cliente AND presupuestos.id_vendedor =  users.user_id 
 								AND clientes.nombre_cliente LIKE '%".$_POST['p']."%' AND MONTH(presupuestos.fecha_factura) = '".$_POST['m']."'";
 
@@ -159,7 +159,7 @@
 		} elseif ($_POST['p'] != "" && $_POST['m'] == "00" && $_POST['a'] != "0") {
 			
 			//Busca por proveedor y año
-			$sql="SELECT presupuestos.*, users.firstname, users.lastname, clientes.nombre_cliente FROM presupuestos, users, clientes 
+			$sql="SELECT presupuestos.*, users.firstname, users.lastname, clientes.nombre_cliente, clientes.telefono_cliente, clientes.email_cliente FROM presupuestos, users, clientes 
 								WHERE presupuestos.id_cliente = clientes.id_cliente AND presupuestos.id_vendedor =  users.user_id 
 								AND clientes.nombre_cliente LIKE '%".$_POST['p']."%' AND YEAR(presupuestos.fecha_factura) = '".$_POST['a']."'";
 
@@ -173,7 +173,7 @@
 		} elseif ($_POST['p'] == "" && $_POST['m'] != "00" && $_POST['a'] != "0") {
 			
 			//Busca por mes y año
-			$sql="SELECT presupuestos.*, users.firstname, users.lastname, clientes.nombre_cliente FROM presupuestos, users, clientes 
+			$sql="SELECT presupuestos.*, users.firstname, users.lastname, clientes.nombre_cliente, clientes.telefono_cliente, clientes.email_cliente  FROM presupuestos, users, clientes 
 								WHERE presupuestos.id_cliente = clientes.id_cliente AND presupuestos.id_vendedor =  users.user_id 
 								AND YEAR(presupuestos.fecha_factura) = '".$_POST['a']."' AND MONTH(presupuestos.fecha_factura) = '".$_POST['m']."'";
 
@@ -186,7 +186,7 @@
 			
 		} else {
 
-			$sql="SELECT presupuestos.*, users.firstname, users.lastname, clientes.nombre_cliente FROM presupuestos, users, clientes 
+			$sql="SELECT presupuestos.*, users.firstname, users.lastname, clientes.nombre_cliente, clientes.telefono_cliente, clientes.email_cliente FROM presupuestos, users, clientes 
 								WHERE presupuestos.id_cliente = clientes.id_cliente AND presupuestos.id_vendedor =  users.user_id 
 								AND YEAR(presupuestos_prov.fecha_factura) = '".$_POST['a']."' AND MONTH(presupuestos.fecha_factura) = '".$_POST['m']."' AND clientes.nombre_cliente LIKE '%".$_POST['p']."%'";
 
@@ -205,7 +205,6 @@
 					<th>#</th>
 					<th>Fecha</th>
 					<th>Cliente</th>
-					<th>Vendedor</th>
 					<th>Estado</th>
 					<th class='text-right'>SUBTOTAL</th>
 					<th class='text-right'>IVA</th>
@@ -224,19 +223,22 @@
 				$id_factura = $rw_fact['id_factura'];
 				$num_fact = $rw_fact['numero_factura'];
 				$fecha_factura=date("d/m/Y", strtotime($rw_fact['fecha_factura']));
-				$nombre_cli = $rw_fact['firstname']." ".$rw_fact['lastname'];
-				$nombre_prov = $rw_fact['nombre_cliente'];
+				$nombre_cli = $rw_fact['nombre_cliente'];
 				$cond = $rw_fact['condiciones'];
 				$total = $rw_fact['total_venta'];
 				$estado = $rw_fact['estado_factura'];
+				$telefono_cliente=$rw_fact['telefono_cliente'];
+				$email_cliente=$rw_fact['email_cliente'];
 
-				if ($estado == 1){
-					$text_estado="Pagada";
+				if ($estado==1){
+					$text_estado="Aceptado";
 					$label_class='label-success';
-				
+					$disabled = "disabled";
 				} else{
 					$text_estado="Pendiente";
 					$label_class='label-warning';
+					$disabled = "";
+					
 				}
 				
 				$neto = $rw_fact['total_venta'];
@@ -249,13 +251,13 @@
 				<tr>
 					<td><?php echo $num_fact; ?></td>
 					<td><?php echo $fecha_factura; ?></td>
-					<td><?php echo $nombre_cli; ?></td>
-					<td><?php echo $nombre_prov; ?></td>
+					<td><a href="#" data-toggle="tooltip" data-placement="top" title="<i class='glyphicon glyphicon-phone'></i> <?php echo $telefono_cliente;?><br><i class='glyphicon glyphicon-envelope'></i>  <?php echo $email_cliente;?>" ><?php echo $nombre_cli; ?></a></td>
 					<td><span class="label <?php echo $label_class;?>"><?php echo $text_estado; ?></span></td>
 					<td class='text-right' class="sub" value="<?php number_format ($bruto,2);?>"><?php echo number_format ($bruto,2) ?></td>
 					<td class='text-right' class="iva" value="<?php number_format ($iva,2);?>"><?php echo number_format ($iva,2) ?></td>	
 					<td class='text-right'><?php echo number_format ($neto,2); ?></td>	
 					<td class="text-right">
+						<a href="pasar_a_factura.php?id_factura=<?php echo $id_factura?>" class="btn btn-success" title="Pasar a factura" <?php echo $disabled?>><i class="glyphicon glyphicon-check"></i></a>
 						<a href="editar_presupuesto.php?id_factura=<?php echo $id_factura;?>" class='btn btn-default' title='Editar presupuesto'><i class="glyphicon glyphicon-edit"></i></a> 
 						<a href="editar_fecha_presu.php?id_factura=<?php echo $id_factura;?>" class='btn btn-default' title='Editar fecha presupuesto' ><i class="glyphicon glyphicon-calendar"></i></a>
 						<a href="#" class='btn btn-default' title='Descargar presupuesto' onclick="imprimir_factura('<?php echo $id_factura;?>');"><i class="glyphicon glyphicon-download"></i></a> 
