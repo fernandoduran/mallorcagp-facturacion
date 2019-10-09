@@ -100,7 +100,7 @@
 		} elseif ($_POST['p'] == "" && $_POST['m'] != "00" && $_POST['a'] == "0") {
 			
 			//busca por mes
-			$sql = "SELECT facturas.*, users.firstname, users.lastname, clientes.nombre_cliente FROM facturas, users, clientes 
+			$sql = "SELECT facturas.*, users.firstname, users.lastname, clientes.nombre_cliente, clientes.telefono_cliente, clientes.email_cliente FROM facturas, users, clientes 
 								WHERE facturas.id_cliente = clientes.id_cliente AND facturas.id_vendedor =  users.user_id 
 								AND MONTH(facturas.fecha_factura) = '".$_POST['m']."'";
 
@@ -115,7 +115,7 @@
 		} elseif ($_POST['p'] == "" && $_POST['m'] == "00" && $_POST['a'] != "0") {
 			
 			//busca por año
-			$sql = "SELECT facturas.*, users.firstname, users.lastname, clientes.nombre_cliente FROM facturas, users, clientes 
+			$sql = "SELECT facturas.*, users.firstname, users.lastname, clientes.nombre_cliente, clientes.telefono_cliente, clientes.email_cliente FROM facturas, users, clientes 
 								WHERE facturas.id_cliente = clientes.id_cliente AND facturas.id_vendedor =  users.user_id
 								AND YEAR(facturas.fecha_factura) = '".$_POST['a']."'";
 
@@ -130,7 +130,7 @@
 		} elseif ($_POST['p'] != "" && $_POST['m'] == "00" && $_POST['a'] == "0") {
 			
 			//busca por proveedor
-			$sql="SELECT facturas.*, users.firstname, users.lastname, clientes.nombre_cliente FROM facturas, users, clientes 
+			$sql="SELECT facturas.*, users.firstname, users.lastname, clientes.nombre_cliente, clientes.telefono_cliente, clientes.email_cliente FROM facturas, users, clientes 
 								WHERE facturas.id_cliente = clientes.id_cliente AND facturas.id_vendedor =  users.user_id 
 								AND clientes.nombre_cliente LIKE '%".$_POST['p']."%'";
 
@@ -145,7 +145,7 @@
 		} elseif ($_POST['p'] != "" && $_POST['m'] != "00" && $_POST['a'] == "0") {
 			
 			//Busca por proveedor y mes
-			$sql="SELECT facturas.*, users.firstname, users.lastname, clientes.nombre_cliente FROM facturas, users, clientes 
+			$sql="SELECT facturas.*, users.firstname, users.lastname, clientes.nombre_cliente, clientes.telefono_cliente, clientes.email_cliente FROM facturas, users, clientes 
 								WHERE facturas.id_cliente = clientes.id_cliente AND facturas.id_vendedor =  users.user_id 
 								AND clientes.nombre_cliente LIKE '%".$_POST['p']."%' AND MONTH(facturas.fecha_factura) = '".$_POST['m']."'";
 
@@ -159,7 +159,7 @@
 		} elseif ($_POST['p'] != "" && $_POST['m'] == "00" && $_POST['a'] != "0") {
 			
 			//Busca por proveedor y año
-			$sql="SELECT facturas.*, users.firstname, users.lastname, clientes.nombre_cliente FROM facturas, users, clientes 
+			$sql="SELECT facturas.*, users.firstname, users.lastname, clientes.nombre_cliente, clientes.telefono_cliente, clientes.email_cliente FROM facturas, users, clientes 
 								WHERE facturas.id_cliente = clientes.id_cliente AND facturas.id_vendedor =  users.user_id 
 								AND clientes.nombre_cliente LIKE '%".$_POST['p']."%' AND YEAR(facturas.fecha_factura) = '".$_POST['a']."'";
 
@@ -173,7 +173,7 @@
 		} elseif ($_POST['p'] == "" && $_POST['m'] != "00" && $_POST['a'] != "0") {
 			
 			//Busca por mes y año
-			$sql="SELECT facturas.*, users.firstname, users.lastname, clientes.nombre_cliente FROM facturas, users, clientes 
+			$sql="SELECT facturas.*, users.firstname, users.lastname, clientes.nombre_cliente, clientes.telefono_cliente, clientes.email_cliente FROM facturas, users, clientes 
 								WHERE facturas.id_cliente = clientes.id_cliente AND facturas.id_vendedor =  users.user_id 
 								AND YEAR(facturas.fecha_factura) = '".$_POST['a']."' AND MONTH(facturas.fecha_factura) = '".$_POST['m']."'";
 
@@ -186,7 +186,7 @@
 			
 		} else {
 
-			$sql="SELECT facturas.*, users.firstname, users.lastname, clientes.nombre_cliente FROM facturas, users, clientes 
+			$sql="SELECT facturas.*, users.firstname, users.lastname, clientes.nombre_cliente, clientes.telefono_cliente, clientes.email_cliente FROM facturas, users, clientes 
 								WHERE facturas.id_cliente = clientes.id_cliente AND facturas.id_vendedor =  users.user_id 
 								AND YEAR(facturas_prov.fecha_factura) = '".$_POST['a']."' AND MONTH(facturas.fecha_factura) = '".$_POST['m']."' AND clientes.nombre_cliente LIKE '%".$_POST['p']."%'";
 
@@ -205,12 +205,11 @@
 					<th>#</th>
 					<th>Fecha</th>
 					<th>Cliente</th>
-					<th>Vendedor</th>
 					<th>Estado</th>
 					<th class='text-right'>SUBTOTAL</th>
 					<th class='text-right'>IVA</th>
 					<th class='text-right'>Total</th>
-					<th class='text-right'>Acciones</th>
+					<th class='text-center' colspan='4'>Acciones</th>
 				</tr>
 		<?php
 
@@ -224,8 +223,7 @@
 				$id_factura = $rw_fact['id_factura'];
 				$num_fact = $rw_fact['numero_factura'];
 				$fecha_factura=date("d/m/Y", strtotime($rw_fact['fecha_factura']));
-				$nombre_cli = $rw_fact['firstname']." ".$rw_fact['lastname'];
-				$nombre_prov = $rw_fact['nombre_cliente'];
+				$nombre_cli = $rw_fact['nombre_cliente'];
 				$cond = $rw_fact['condiciones'];
 				$total = $rw_fact['total_venta'];
 				$estado = $rw_fact['estado_factura'];
@@ -249,8 +247,7 @@
 				<tr>
 					<td><?php echo $num_fact; ?></td>
 					<td><?php echo $fecha_factura; ?></td>
-					<td><?php echo $nombre_cli; ?></td>
-					<td><?php echo $nombre_prov; ?></td>
+					<td><a href="#" data-toggle="tooltip" data-placement="top" title="<i class='glyphicon glyphicon-phone'></i> <?php echo $telefono_cliente;?><br><i class='glyphicon glyphicon-envelope'></i>  <?php echo $email_cliente;?>" ><?php echo $nombre_cli; ?></a></td>
 					<td><span class="label <?php echo $label_class;?>"><?php echo $text_estado; ?></span></td>
 					<td class='text-right' class="sub" value="<?php number_format ($bruto,2);?>"><?php echo number_format ($bruto,2) ?></td>
 					<td class='text-right' class="iva" value="<?php number_format ($iva,2);?>"><?php echo number_format ($iva,2) ?></td>	

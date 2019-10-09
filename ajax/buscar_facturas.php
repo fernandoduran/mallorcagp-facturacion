@@ -78,7 +78,6 @@
 					<th>#</th>
 					<th>Fecha</th>
 					<th>Cliente</th>
-					<th>Vendedor</th>
 					<th>Estado</th>
 					<th class='text-right'>SUBTOTAL</th>
 					<th class='text-right'>IVA</th>
@@ -116,7 +115,6 @@
 						<td><?php echo $numero_factura; ?></td>
 						<td><?php echo $fecha; ?></td>
 						<td><a href="#" data-toggle="tooltip" data-placement="top" title="<i class='glyphicon glyphicon-phone'></i> <?php echo $telefono_cliente;?><br><i class='glyphicon glyphicon-envelope'></i>  <?php echo $email_cliente;?>" ><?php echo $nombre_cliente;?></a></td>
-						<td><?php echo $nombre_vendedor; ?></td>
 						<td><span class="label <?php echo $label_class;?>"><?php echo $text_estado; ?></span></td>
 						<td class='text-right' class="sub" value="<?php number_format ($sub,2);?>"><?php echo number_format ($sub,2) ?></td>
 						<td class='text-right' class="iva" value="<?php number_format ($iva,2);?>"><?php echo number_format ($iva,2) ?></td>	
